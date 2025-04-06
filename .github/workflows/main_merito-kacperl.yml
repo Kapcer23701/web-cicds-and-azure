@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore
 
       - name: Build with dotnet
-        run: dotnet build web-cicds-and-azure.sln --configuration Release
+        run: dotnet build MeritoWebApp/MeritoWebApp.csproj --configuration Release
 
       - name: Test with xUnit
         run: dotnet test --no-build --verbosity normal
@@ -35,7 +35,7 @@ jobs:
       - name: Publish application
         run: dotnet publish MeritoWebApp/MeritoWebApp.csproj -c Release -o ./myapp
 
-      - name: Verify published package
+      - name: Debug workspace
         run: dir ./myapp
 
       - name: Upload artifact for deployment job
@@ -59,7 +59,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
+      - name: Debug downloaded artifact
+        run: dir ./
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
